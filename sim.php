@@ -47,12 +47,12 @@ var_dump($seats);
 <?php
 for($i = 0; $i < 8; $i++){
 	?>
-	<div id="seat<?php echo $i + 1 ?>" class="<?php if($seats[$seat]){echo "enabled";} else {echo "disabled";} ?> box" style="top: <?php echo 191 - $i * 2 ?>px; left: <?php echo 278 + $i * 23 ?>px;"><?php echo $i + 1 ?></div>
+	<div id="seat<?php echo $i + 1 ?>" class="<?php if($seats[$i + 1]){echo "enabled";} else {echo "disabled";} ?> box" style="top: <?php echo 191 - $i * 2 ?>px; left: <?php echo 278 + $i * 23 ?>px;"><?php echo $i + 1 ?></div>
 	<?php	
 }
 for($i = 0; $i < 8; $i++){
 	?>
-	<div id="seat<?php echo $i + 9 ?>" class="<?php if($seats[$seat]){echo "enabled";} else {echo "disabled";} ?>  box" style="top: <?php echo 177 + $i * 2 ?>px; left: <?php echo 462 + $i * 23 ?>px;"><?php echo $i + 9 ?></div>
+	<div id="seat<?php echo $i + 9 ?>" class="<?php if($seats[$i + 9]){echo "enabled";} else {echo "disabled";} ?>  box" style="top: <?php echo 177 + $i * 2 ?>px; left: <?php echo 462 + $i * 23 ?>px;"><?php echo $i + 9 ?></div>
 	<?php	
 }
 ?>
