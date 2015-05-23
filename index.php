@@ -92,7 +92,7 @@ if ($_GET['action'] != null) {
 		}
 		$final_votes = array();
 		if($total_vote > 0) {
-			$final_votes['total'] = $total / $total_vote;
+			$final_votes['total'] =  $total_vote / $total;
 		} else {
 			$final_votes['total'] = 0;
 		}
