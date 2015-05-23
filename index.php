@@ -1,7 +1,23 @@
 <?php
+
+/*
+
+create table seats (id MEDIUMINT NOT NULL AUTO_INCREMENT, seat INTEGER, vote INTEGER, inserttime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (ID));
+
+create table youfrom (id MEDIUMINT NOT NULL AUTO_INCREMENT, time double, pan double, primary key (id));
+
+
+ */
+
+$user = 'webgdr';
+$password = 'webgdr';
+$db = 'webgdr';
+
+/*
 $user = 'root';
 $password = 'Ods4wPHZ35';
 $db = 'mysql';
+*/
 $con = mysqli_connect('127.0.0.1', $user, $password, $db);
 
 $fromStr = '{
@@ -50,16 +66,16 @@ if ($_GET['action'] != null) {
 		json_encode($thing);
 	}
 	if ($_GET['action'] == "votes") {
-		echo $votesStr;
 		$result = mysqli_query($con,"SELECT * FROM `seats`;");
 		$total = 0;
 		$total_vote = 0;
 		$votes = array();
 		for($i = 0; $i < 10; $i++){
 			$zone_string = "zone".($i + 1);
-			$votes.push(array($zone_string => array()));
+			$votes[$zone_string] = array();
+			$votes[$zone_string]['total'] = 0;
+			$votes[$zone_string]['votes'] = 0;
 		}
-		/*
 		while($row = mysqli_fetch_array($result)) {
 			$seat = $row['seat'];
 			$vote = $row['vote'];
@@ -71,11 +87,23 @@ if ($_GET['action'] != null) {
 			$zone_string = "zone".($seat_group + 1);
 			$votes[$zone_string]['total']++;
 			if($vote != 0){
-				$votes[$zone_string]['votes'];
+				$votes[$zone_string]['votes']++;
 			}
 		}
-		echo json_encode(array("votes" => $votes));
-		*/
+		$final_votes = array();
+		if($total_vote > 0) {
+			$final_votes['total'] = $total / $total_vote;
+		} else {
+			$final_votes['total'] = 0;
+		}
+		foreach($votes as $seat_group_name => $seat_group_array){
+			if($seat_group_array['total'] != 0){
+				$final_votes[$seat_group_name] = $seat_group_array['votes'] / $seat_group_array['total'];
+			} else {
+				$final_votes[$seat_group_name] = 0;
+			}
+		}
+		echo json_encode(array("votes" => $final_votes));
 	}
 	if ($_GET['action'] == "setfrom") {
 		$lat = (float)$_GET['lat'];
@@ -89,6 +117,10 @@ if ($_GET['action'] != null) {
 		$seat = intval($_GET['seat']);
 		$enabled = intval($_GET['enabled']);
 		mysqli_query($con,"INSERT INTO `seats` (seat, vote) values(".$seat.", ".$enabled.");");
+	}
+	if ($_GET['action'] == "removeseat") {
+		$seat = intval($_GET['seat']);
+		mysqli_query($con,"DELETE FROM `seats` WHERE seat = ".$seat.";");
 	}
 	//Clear Data
 	//Simulator
