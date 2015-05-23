@@ -62,7 +62,7 @@ function enablesome(){
 		var seat = Math.floor((Math.random() * 16)) + 1;
 		$.get( "index.php?action=setseat&seat="+seat+"&enabled=1" );
 	}
-	location.reload();
+	setTimeout(refresh, 1000);
 }
 
 function disablesome(){
@@ -70,14 +70,18 @@ function disablesome(){
 		var seat = Math.floor((Math.random() * 16)) + 1;
 		$.get( "index.php?action=setseat&seat="+seat+"&enabled=0" );
 	}
-	location.reload();
+	setTimeout(refresh, 1000);
 }
 
 function disableall(){
 	for(seat = 2; seat <= 16; seat++){
 		$.get( "index.php?action=setseat&seat="+seat+"&enabled=0" );
 	}
-	location.reload();
+	setTimeout(refresh, 1000);
+}
+
+function refresh() {
+	location.reload(true);	
 }
 </script>
 <form>
