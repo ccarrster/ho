@@ -78,7 +78,10 @@ if ($_GET['action'] != null) {
 		$lat = (float)$_GET['lat'];
 		$lon = (float)$_GET['lon'];
 		$distance = distance($lat, $lon, $homeLat, $homeLon);
-		$time = (($distance * 1000 * 2) / 343) % 60;
+		$time = (($distance * 1000.0 * 2.0) / 343.0);
+		while($time > 10){
+			$time = $time / 10;
+		}
 		//$bering = bering($homeLat, $homeLon, $lat, $lon);
 		mysqli_query($con,"INSERT INTO `youfrom` (time, pan) values(".$time.", 0);");
 	}
@@ -87,6 +90,12 @@ if ($_GET['action'] != null) {
 		$enabled = intval($_GET['enabled']);
 		mysqli_query($con,"DELETE FROM `seats` WHERE seat = ".$seat.";");
 		mysqli_query($con,"INSERT INTO `seats` (seat, vote) values(".$seat.", ".$enabled.");");
+	}
+	if ($_GET['action'] == "disablerest") {
+		mysqli_query($con,"UPDATE `seats` set vote = 0 where seat <> 1;");
+	}
+	if ($_GET['action'] == "removeallseats") {
+		mysqli_query($con,"DELETE FROM `seats`;");
 	}
 	if ($_GET['action'] == "removeseat") {
 		$seat = intval($_GET['seat']);
