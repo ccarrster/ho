@@ -8,16 +8,16 @@ create table youfrom (id MEDIUMINT NOT NULL AUTO_INCREMENT, time double, pan dou
 
 
  */
-
+/*
 $user = 'webgdr';
 $password = 'webgdr';
 $db = 'webgdr';
+*/
 
-/*
 $user = 'root';
 $password = 'Ods4wPHZ35';
 $db = 'mysql';
-*/
+
 $con = mysqli_connect('127.0.0.1', $user, $password, $db);
 
 $fromStr = '{
