@@ -40,28 +40,40 @@ $homeLon = -80.48386;
 if ($_GET['action'] != null) {
 	if ($_GET['action'] == "from") {
 		echo $fromStr;
-		/*
 		$result = mysqli_query($con,"SELECT * FROM `youfrom`;");
 		while($row = mysqli_fetch_array($result)) {
 			$time = $row['time'];
-			$pan = $row['pan'];
-			json_encode($thing);
-			echo $time;
-			echo $pan;
+			$pan = $row['pan'];			
+			//echo $time;
+			//echo $pan;
 		}
-		*/
+		json_encode($thing);
 	}
 	if ($_GET['action'] == "votes") {
-		echo $votesStr;
-		/*
+		//echo $votesStr;
 		$result = mysqli_query($con,"SELECT * FROM `seats`;");
+		$total = 0;
+		$total_vote = 0;
+		$votes = array();
+		for($i = 0; $i < 10; $i++){
+			$zone_string = "zone".($i + 1);
+			$votes.push(array($zone_string => array()));
+		}
 		while($row = mysqli_fetch_array($result)) {
 			$seat = $row['seat'];
 			$vote = $row['vote'];
-			echo $seat;
-			echo $vote;
+			$total++;
+			if($vote != 0){
+				$total_vote++;
+			}
+			$seat_group = $seat % 10;
+			$zone_string = "zone".($seat_group + 1);
+			$votes[$zone_string]['total']++;
+			if($vote != 0){
+				$votes[$zone_string]['votes'];
+			}
 		}
-		*/
+		echo json_encode(array("votes" => $votes));
 	}
 	if ($_GET['action'] == "setfrom") {
 		$lat = (float)$_GET['lat'];
