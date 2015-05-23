@@ -100,6 +100,11 @@ function disableall(){
 	setTimeout(refresh, 1000);
 }
 
+function removeall(){
+	$.get( "index.php?action=removeallseats" );
+	setTimeout(refresh, 1000);
+}
+
 function refresh() {
 	location.reload(true);	
 }
@@ -108,6 +113,7 @@ function refresh() {
 <input type="button" value="Enable Some" onclick="enablesome()">
 <input type="button" value="Disable Some" onclick="disablesome()">
 <input type="button" value="Disable All" onclick="disableall()">
+<input type="button" value="Remove All" onclick="removeall()">
 </form>
 </body>
 </html>
