@@ -62,14 +62,14 @@ for($i = 0; $i < 16; $i++){
 }
 for($i = 0; $i < 16; $i++){
 	?>
-	<div id="seat<?php echo $i + 33 ?>" class="<?php if($seats[$i + 33]){echo "enabled";} else {echo "disabled";} ?>  box" style="top: <?php echo 146 + $i * 3 ?>px; left: <?php echo 462 + $i * 23 ?>px;"><?php echo $i + 17 ?></div>
+	<div id="seat<?php echo $i + 33 ?>" class="<?php if($seats[$i + 33]){echo "enabled";} else {echo "disabled";} ?>  box" style="top: <?php echo 131 + $i * 3 ?>px; left: <?php echo 462 + $i * 23 ?>px;"><?php echo $i + 17 ?></div>
 	<?php	
 }
 ?>
 <script>
 function enablesome(){
 	for(i = 0; i < 4; i++){
-		var seat = Math.floor((Math.random() * 16)) + 1;
+		var seat = Math.floor((Math.random() * 48)) + 1;
 		$.get( "index.php?action=setseat&seat="+seat+"&enabled=1" );
 	}
 	setTimeout(refresh, 1000);
@@ -77,14 +77,14 @@ function enablesome(){
 
 function disablesome(){
 	for(i = 0; i < 4; i++){
-		var seat = Math.floor((Math.random() * 16)) + 1;
+		var seat = Math.floor((Math.random() * 48)) + 1;
 		$.get( "index.php?action=setseat&seat="+seat+"&enabled=0" );
 	}
 	setTimeout(refresh, 1000);
 }
 
 function disableall(){
-	for(seat = 2; seat <= 16; seat++){
+	for(seat = 2; seat <= 48; seat++){
 		$.get( "index.php?action=setseat&seat="+seat+"&enabled=0" );
 	}
 	setTimeout(refresh, 1000);
