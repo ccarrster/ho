@@ -23,6 +23,7 @@ while($row = mysqli_fetch_array($result)) {
 ?>
 <html>
 <head>
+<script src="jquery-2.1.4.js"></script>
 <title>Be // From - Seating View</title>
 <style>
 .enabled {
@@ -55,5 +56,31 @@ for($i = 0; $i < 8; $i++){
 	<?php	
 }
 ?>
+<script>
+function enablesome(){
+	for(i = 0; i < 4; i++){
+		var seat = Math.floor((Math.random() * 16)) + 1;
+		$.get( "index.php?action=setseat&seat="+seat+"&enabled=1" );
+	}
+}
+
+function disablesome(){
+	for(i = 0; i < 4; i++){
+		var seat = Math.floor((Math.random() * 16)) + 1;
+		$.get( "index.php?action=setseat&seat="+seat+"&enabled=0" );
+	}
+}
+
+function disableall(){
+	for(seat = 2; seat <= 16; seat++){
+		$.get( "index.php?action=setseat&seat="+seat+"&enabled=0" );
+	}
+}
+</script>
+<form>
+<input type="button" value="Enable Some" onclick="enablesome()">
+<input type="button" value="Disable Some" onclick="disablesome()">
+<input type="button" value="Disable All" onclick="disableall()">
+</form>
 </body>
 </html>
