@@ -17,6 +17,7 @@
 typedef NS_ENUM(NSInteger, BFViewState) {
     BFViewStateBe,
     BFViewStateFrom,
+    BFViewStateChoose,
     BFViewStateGo
 };
 
@@ -26,6 +27,11 @@ typedef NS_ENUM(NSInteger, BFViewState) {
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) MKPointAnnotation *selectedLocation;
 @property (nonatomic) BOOL zoomedMap;
+
+@property (nonatomic) UIImageView *viewsOld;
+@property (nonatomic) UIImageView *viewsNew;
+@property (nonatomic) NSTimer *viewTransitionTimer;
+@property (nonatomic) NSInteger transitionTimerFireCount;
 
 @end
 
@@ -65,8 +71,19 @@ typedef NS_ENUM(NSInteger, BFViewState) {
     return YES;
 }
 
+- (UIImage *)viewSnapshot:(BOOL)afterScreenUpdates {
+    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0f);
+    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:afterScreenUpdates];
+    UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return snapshotImage;
+}
+
 - (void)setState:(BFViewState)state {
     if (_state != state) {
+        
+        self.viewsOld = [[UIImageView alloc] initWithImage:[self viewSnapshot:NO]];
         
         switch (state) {
             case BFViewStateBe:
@@ -82,6 +99,10 @@ typedef NS_ENUM(NSInteger, BFViewState) {
                 self.inputButton.hidden = NO;
                 self.view.backgroundColor = [BFPerson sharedInstance].colour;
                 
+                break;
+                
+            case BFViewStateChoose:
+                self.mapView.hidden = NO;
                 break;
                 
             case BFViewStateGo:
@@ -100,14 +121,40 @@ typedef NS_ENUM(NSInteger, BFViewState) {
                 break;
         }
         
+        self.viewsNew = [[UIImageView alloc] initWithImage:[self viewSnapshot:YES]];
+        self.viewsNew.contentMode = UIViewContentModeCenter;
+        self.viewsNew.clipsToBounds = YES;
+        self.viewsNew.frame = CGRectMake(0, 0, 0, 0);
+        
+        [self.view addSubview:self.viewsOld];
+        [self.view addSubview:self.viewsNew];
+        
+        self.transitionTimerFireCount = 0;
+        self.viewTransitionTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(transitionViews) userInfo:nil repeats:YES];
+        
         _state = state;
+    }
+}
+
+- (void)transitionViews {
+    self.transitionTimerFireCount++;
+    CGFloat newCircumference = self.viewsNew.frame.size.width + self.transitionTimerFireCount;
+    
+    self.viewsNew.frame = CGRectMake(0, 0, newCircumference, newCircumference);
+    self.viewsNew.layer.cornerRadius = newCircumference / 2;
+    self.viewsNew.center = self.viewsOld.center;
+    
+    if (newCircumference > self.viewsOld.frame.size.height * 2) {
+        [self.viewsOld removeFromSuperview];
+        [self.viewsNew removeFromSuperview];
+        [self.viewTransitionTimer invalidate];
     }
 }
 
 - (IBAction)inputButtonTapped:(id)sender {
     [self.locationManager requestWhenInUseAuthorization];
     self.mapView.showsUserLocation = YES;
-    self.mapView.hidden = NO;
+    self.state = BFViewStateChoose;
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -153,11 +200,13 @@ typedef NS_ENUM(NSInteger, BFViewState) {
     }
     
     CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
+    
     CLLocationCoordinate2D touchMapCoordinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
     
     self.selectedLocation = [[MKPointAnnotation alloc] init];
     self.selectedLocation.coordinate = touchMapCoordinate;
     self.selectedLocation.title = @"This is where I'm from.";
+    
     [self.mapView addAnnotation:self.selectedLocation];
     [self.mapView selectAnnotation:self.selectedLocation animated:YES];
 }
