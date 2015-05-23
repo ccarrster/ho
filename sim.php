@@ -96,9 +96,7 @@ function disablesome(){
 }
 
 function disableall(){
-	for(seat = 2; seat <= 80; seat++){
-		$.get( "index.php?action=setseat&seat="+seat+"&enabled=0" );
-	}
+	$.get( "index.php?action=disablerest" );
 	setTimeout(refresh, 1000);
 }
 

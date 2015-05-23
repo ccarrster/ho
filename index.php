@@ -88,6 +88,9 @@ if ($_GET['action'] != null) {
 		mysqli_query($con,"DELETE FROM `seats` WHERE seat = ".$seat.";");
 		mysqli_query($con,"INSERT INTO `seats` (seat, vote) values(".$seat.", ".$enabled.");");
 	}
+	if ($_GET['action'] == "disablerest") {
+		mysqli_query($con,"UPDATE `seats` set vote = 0 where seat <> 1;");
+	}
 	if ($_GET['action'] == "removeseat") {
 		$seat = intval($_GET['seat']);
 		mysqli_query($con,"DELETE FROM `seats` WHERE seat = ".$seat.";");
