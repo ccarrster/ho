@@ -39,6 +39,7 @@ while($row = mysqli_fetch_array($result)) {
 	position: absolute;
 	width: 20px;
 	height: 30px;
+	text-align: center;
 }
 </style>
 </head>
