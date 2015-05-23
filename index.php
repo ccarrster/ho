@@ -34,36 +34,20 @@ $fromStr = '{
         ]
     }
 }';
-$votesStr = '{
-	"votes": {
-		"total": 0.3,
-		"zone1": 0.0,
-		"zone2": 0.1,
-		"zone3": 0.7,
-		"zone4": 0.2,
-		"zone5": 1.0,
-		"zone6": 0.3,
-		"zone7": 0.5,
-		"zone8": 0.2,
-		"zone9": 0.1,
-		"zone10": 0.1
-	}
-}';
 
 $homeLat = 43.454308;
 $homeLon = -80.48386;
 
 if ($_GET['action'] != null) {
 	if ($_GET['action'] == "from") {
-		echo $fromStr;
 		$result = mysqli_query($con,"SELECT * FROM `youfrom`;");
+		$data = array();
 		while($row = mysqli_fetch_array($result)) {
 			$time = $row['time'];
 			$pan = $row['pan'];			
-			//echo $time;
-			//echo $pan;
+			$data[] = array("time" => $time, "pan" => $pan);
 		}
-		json_encode($thing);
+		echo json_encode(array("from" => array("data" => $data)));
 	}
 	if ($_GET['action'] == "votes") {
 		$result = mysqli_query($con,"SELECT * FROM `seats`;");
