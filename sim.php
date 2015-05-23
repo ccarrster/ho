@@ -20,7 +20,6 @@ while($row = mysqli_fetch_array($result)) {
 	$vote = $row['vote'];
 	$seats[$seat] = $vote;
 }
-var_dump($seats);
 ?>
 <html>
 <head>
