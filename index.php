@@ -78,7 +78,7 @@ if ($_GET['action'] != null) {
 		$lat = (float)$_GET['lat'];
 		$lon = (float)$_GET['lon'];
 		$distance = distance($lat, $lon, $homeLat, $homeLon);
-		$time = ($distance * 1000 * 2) / 343;
+		$time = (($distance * 1000 * 2) / 343) % 60;
 		//$bering = bering($homeLat, $homeLon, $lat, $lon);
 		mysqli_query($con,"INSERT INTO `youfrom` (time, pan) values(".$time.", 0);");
 	}
