@@ -20,21 +20,6 @@ $db = 'mysql';
 
 $con = mysqli_connect('127.0.0.1', $user, $password, $db);
 
-$fromStr = '{
-    "from": {
-        "data": [
-            {
-                "time": 1.1,
-                "pan": 0.4
-            },
-            {
-                "time": 2.5,
-                "pan": -0.4
-            }
-        ]
-    }
-}';
-
 $homeLat = 43.454308;
 $homeLon = -80.48386;
 
@@ -54,7 +39,7 @@ if ($_GET['action'] != null) {
 		$total = 0;
 		$total_vote = 0;
 		$votes = array();
-		for($i = 0; $i < 10; $i++){
+		for($i = 0; $i < 5; $i++){
 			$zone_string = "zone".($i + 1);
 			$votes[$zone_string] = array();
 			$votes[$zone_string]['total'] = 0;
@@ -67,7 +52,7 @@ if ($_GET['action'] != null) {
 			if($vote != 0){
 				$total_vote++;
 			}
-			$seat_group = $seat % 10;
+			$seat_group = $seat % 5;
 			$zone_string = "zone".($seat_group + 1);
 			$votes[$zone_string]['total']++;
 			if($vote != 0){
