@@ -57,12 +57,12 @@ for($i = 0; $i < 8; $i++){
 }
 for($i = 0; $i < 16; $i++){
 	?>
-	<div id="seat<?php echo $i + 17 ?>" class="<?php if($seats[$i + 17]){echo "enabled";} else {echo "disabled";} ?> box" style="top: <?php echo 176 - $i * 2 ?>px; left: <?php echo 93 + $i * 23 ?>px;"><?php echo $i + 1 ?></div>
+	<div id="seat<?php echo $i + 17 ?>" class="<?php if($seats[$i + 17]){echo "enabled";} else {echo "disabled";} ?> box" style="top: <?php echo 176 - $i * 3 ?>px; left: <?php echo 93 + $i * 23 ?>px;"><?php echo $i + 1 ?></div>
 	<?php	
 }
 for($i = 0; $i < 16; $i++){
 	?>
-	<div id="seat<?php echo $i + 33 ?>" class="<?php if($seats[$i + 33]){echo "enabled";} else {echo "disabled";} ?>  box" style="top: <?php echo 146 + $i * 2 ?>px; left: <?php echo 462 + $i * 23 ?>px;"><?php echo $i + 17 ?></div>
+	<div id="seat<?php echo $i + 33 ?>" class="<?php if($seats[$i + 33]){echo "enabled";} else {echo "disabled";} ?>  box" style="top: <?php echo 146 + $i * 3 ?>px; left: <?php echo 462 + $i * 23 ?>px;"><?php echo $i + 17 ?></div>
 	<?php	
 }
 ?>
