@@ -50,7 +50,7 @@ if ($_GET['action'] != null) {
 		json_encode($thing);
 	}
 	if ($_GET['action'] == "votes") {
-		//echo $votesStr;
+		echo $votesStr;
 		$result = mysqli_query($con,"SELECT * FROM `seats`;");
 		$total = 0;
 		$total_vote = 0;
@@ -59,6 +59,7 @@ if ($_GET['action'] != null) {
 			$zone_string = "zone".($i + 1);
 			$votes.push(array($zone_string => array()));
 		}
+		/*
 		while($row = mysqli_fetch_array($result)) {
 			$seat = $row['seat'];
 			$vote = $row['vote'];
@@ -74,6 +75,7 @@ if ($_GET['action'] != null) {
 			}
 		}
 		echo json_encode(array("votes" => $votes));
+		*/
 	}
 	if ($_GET['action'] == "setfrom") {
 		$lat = (float)$_GET['lat'];
