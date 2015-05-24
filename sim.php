@@ -44,6 +44,7 @@ while($row = mysqli_fetch_array($result)) {
 </style>
 </head>
 <body>
+<img src="befrom.png">
 <img src="seating.png">
 <?php
 for($i = 0; $i < 8; $i++){
