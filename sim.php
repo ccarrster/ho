@@ -44,7 +44,6 @@ while($row = mysqli_fetch_array($result)) {
 </style>
 </head>
 <body>
-<img src="befrom.png">
 <img src="seating.png">
 <?php
 for($i = 0; $i < 8; $i++){
@@ -116,5 +115,6 @@ function refresh() {
 <input type="button" value="Disable All" onclick="disableall()">
 <input type="button" value="Remove All" onclick="removeall()">
 </form>
+<div><img src="befrom.png"></div>
 </body>
 </html>
