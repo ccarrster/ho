@@ -83,7 +83,7 @@ if ($_GET['action'] != null) {
 			$time = $time / 10;
 		}
 		//$bering = bering($homeLat, $homeLon, $lat, $lon);
-		mysqli_query($con,"INSERT INTO `youfrom` (time, pan) values(".$time.", 0);");
+		//mysqli_query($con,"INSERT INTO `youfrom` (time, pan) values(".$time.", 0);");
 	}
 	if ($_GET['action'] == "setseat") {
 		$seat = intval($_GET['seat']);
