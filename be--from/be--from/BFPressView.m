@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UITouch *touch;
 @property (nonatomic, strong) UIView *circleView;
 @property (nonatomic) NSInteger numTimerFirings;
+@property (nonatomic) BOOL touched;
 
 @end
 
